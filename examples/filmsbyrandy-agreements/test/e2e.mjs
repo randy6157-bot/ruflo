@@ -26,7 +26,14 @@ await page.locator('input[value=deposit]').check({ force: true });
 const venmo = await page.locator('#venmo-btn').getAttribute('href');
 assert(venmo.includes('amount=425') && venmo.includes('note=Deposit%2C%20Maria%20Vasquez%2C%20Mar%2020%202027'), 'venmo link has deposit + note');
 
+// Only the chosen method's instructions show
+assert(!(await page.locator('.pay[data-method]').first().isVisible()) && !(await page.locator('#payment_sent').isVisible()), 'no payment instructions before choosing');
+await page.selectOption('#payment_method', 'zelle');
+assert(await page.locator('.pay[data-method=zelle]').isVisible() && !(await page.locator('.pay[data-method=venmo]').isVisible()), 'choosing Zelle shows only Zelle');
 assert(await page.locator('.qr img').evaluate((i) => i.complete && i.naturalWidth > 0), 'Zelle QR image loads');
+await page.locator('section:has(#pay-h)').screenshot({ path: `${shots}/payment-zelle.png` });
+await page.selectOption('#payment_method', 'venmo');
+assert(await page.locator('#venmo-btn').isVisible(), 'choosing Venmo shows the Venmo button');
 // Validation: submitting without agreeing fails
 await page.fill('#client_email', 'maria@example.com');
 await page.locator('#submit').click();
@@ -36,7 +43,6 @@ await page.fill('#venue_address', '123 Example Rd, Danvers, MA');
 await page.fill('#guest_count', '82');
 await page.fill('#questions', 'Can we do a first look?');
 await page.locator('#payment_sent').check();
-await page.selectOption('#payment_method', 'venmo');
 await page.fill('#payment_reference', '@maria-v');
 await page.locator('#pad').scrollIntoViewIfNeeded();
 const box = await page.locator('#pad').boundingBox();

@@ -20,6 +20,13 @@ export const PAGE_SCRIPT = String.raw`
   }
   $$('input[name=payment_choice]').forEach(function(r){ r.onchange = function(){ choice = r.value; applyChoice(); }; });
 
+  // Only show the instructions for the payment method they pick.
+  $('#payment_method').onchange = function(){
+    var m = this.value;
+    $$('.pay[data-method]').forEach(function(p){ p.hidden = p.getAttribute('data-method') !== m; });
+    $('#pay-after').hidden = !m;
+  };
+
   // Venmo: try the app first on phones, fall back to venmo.com
   var mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   $('#venmo-btn').onclick = function(e){
@@ -28,9 +35,7 @@ export const PAGE_SCRIPT = String.raw`
     document.addEventListener('visibilitychange', function h(){ if(document.hidden){ left = true; document.removeEventListener('visibilitychange', h); } });
     window.location.href = o.venmoApp;
     setTimeout(function(){ if(!left) window.location.href = o.venmo; }, 1400);
-    $('#payment_method').value = 'venmo';
   };
-  $('#apple-btn').addEventListener('click', function(){ $('#payment_method').value = 'apple_cash'; });
 
   // Copy buttons
   $$('[data-copy]').forEach(function(b){ b.onclick = function(){
@@ -38,8 +43,6 @@ export const PAGE_SCRIPT = String.raw`
     (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(function(){ say('Copied ' + v); }, function(){
       var t=document.createElement('textarea'); t.value=v; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); say('Copied ' + v);
     });
-    if (v.indexOf('@') > -1 || b.textContent.indexOf('Zelle') > -1) $('#payment_method').value = 'zelle';
-    else $('#payment_method').value = $('#payment_method').value || 'apple_cash';
   }; });
 
   // Signature: draw or type. Strokes are kept as points (0..1 of the pad) and
@@ -89,7 +92,7 @@ export const PAGE_SCRIPT = String.raw`
     if (!v('signer_name')) return fail('Please enter your full name.', '#signer_name');
     if (mode === 'drawn' && !strokes.length) return fail('Please draw your signature, or switch to Type.', '#pad');
     if (!$('#agree').checked) return fail('Please check "I agree to the terms" to continue.', '#agree');
-    if ($('#payment_sent').checked && !v('payment_method')) return fail('Please choose how you paid.', '#payment_method');
+    if ($('#payment_sent').checked && !v('payment_method')) return fail('Please choose how you would like to pay.', '#payment_method');
     var btn = $('#submit'); btn.disabled = true; btn.textContent = 'Submitting...';
     fetch('/agreement/' + D.id + '/sign', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
       client_email: v('client_email'), venue_address: v('venue_address'), guest_count: v('guest_count'), questions: v('questions'),

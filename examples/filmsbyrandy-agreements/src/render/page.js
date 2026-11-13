@@ -74,23 +74,25 @@ function paymentCard(env, a) {
   <p class="sub">Pay Randy directly with whichever app you prefer. Your date is reserved once the deposit is confirmed.</p>
   ${seg}
   <div class="due"><span>Due now: <b data-amount>${dep.amountLabel}</b></span><span data-balance>Balance of ${money(a.total_cents - a.deposit_cents)} due by ${longDate(a.balance_due_date)}</span></div>
-  <div class="pay"><div class="pay-h"><h3>Venmo</h3><span class="handle">@${esc(dep.venmo.handle)}</span></div>
+  <label for="payment_method">How would you like to pay?</label>
+  <select id="payment_method" name="payment_method"><option value="">Choose one</option><option value="venmo">Venmo</option><option value="apple_cash">Apple Pay (Apple Cash)</option><option value="zelle">Zelle</option></select>
+  <div class="pay" data-method="venmo" hidden><div class="pay-h"><h3>Venmo</h3><span class="handle">@${esc(dep.venmo.handle)}</span></div>
     <p>Opens Venmo with the amount and note filled in.</p>
     <div class="btn-row"><a class="btn primary" id="venmo-btn" href="${esc(dep.venmo.webUrl)}" target="_blank" rel="noopener">Pay <span data-amount>${dep.amountLabel}</span> on Venmo</a></div></div>
-  <div class="pay"><div class="pay-h"><h3>Apple Pay (Apple Cash)</h3></div>
+  <div class="pay" data-method="apple_cash" hidden><div class="pay-h"><h3>Apple Pay (Apple Cash)</h3></div>
     <ol><li>Open Messages and start a text to <b class="handle">${esc(dep.apple.phone)}</b>.</li>
     <li>Tap the plus button, then Apple Cash.</li><li>Enter <b data-amount>${dep.amountLabel}</b> and send. Add the note <b data-note>${esc(dep.note)}</b>.</li></ol>
     <div class="btn-row"><a class="btn" id="apple-btn" href="${esc(dep.apple.smsUrl)}">Open Messages</a>
     <button type="button" class="btn" data-copy="${esc(dep.apple.phone)}">Copy number</button></div></div>
-  <div class="pay"><div class="pay-h"><h3>Zelle</h3><span class="handle">${esc(dep.zelle.id)}</span></div>
+  <div class="pay" data-method="zelle" hidden><div class="pay-h"><h3>Zelle</h3><span class="handle">${esc(dep.zelle.id)}</span></div>
     <p>Send <b data-amount>${dep.amountLabel}</b> to ${esc(dep.zelle.name)} from your banking app with the memo <b data-note>${esc(dep.note)}</b>.</p>
     <div class="qr"><img src="/agreement/assets/zelle-qr.png" width="132" height="130" alt="Zelle QR code for ${esc(dep.zelle.name)}"><span>On a computer? Scan this with your banking app to send with Zelle.</span></div>
     <div class="btn-row"><button type="button" class="btn" data-copy="${esc(dep.zelle.id)}">Copy Zelle ${dep.zelle.id.includes('@') ? 'email' : 'number'}</button></div></div>
+  <div id="pay-after" hidden>
   <label class="check"><input type="checkbox" id="payment_sent" name="payment_sent"><span>I have sent my payment</span></label>
-  <label for="payment_method">How did you pay?</label>
-  <select id="payment_method" name="payment_method"><option value="">Choose one</option>${Object.entries(METHOD_LABELS).map(([v, l]) => `<option value="${v}">${l}</option>`).join('')}</select>
   <label for="payment_reference">Payment reference <span class="opt">(optional)</span></label>
   <input type="text" id="payment_reference" name="payment_reference" placeholder="Name on the account or confirmation code">
+  </div>
 </section>`;
 }
 
