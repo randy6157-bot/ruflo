@@ -1,0 +1,21 @@
+{
+  "client_name": "Maria Vasquez",
+  "event_type": "Wedding",
+  "event_date": "2027-03-20",
+  "location": "Danvers, MA",
+  "package": "Video and photography, 6 hours",
+  "price": 850,
+  "deposit": 425,
+  "allow_pay_in_full": true,
+  "balance_due_date": "2027-03-27",
+  "balance_due_note": "after the wedding",
+  "team": "Randy (video) and Brandon (photography)",
+  "delivery": "Photo gallery within 3 weeks of the wedding. Wedding film within 6 weeks of the wedding.",
+  "guest_note": "For this wedding, the final guest count is expected in January 2027.",
+  "details": [
+    { "label": "Coverage", "value": "6 hours" },
+    { "label": "Team", "value": "Randy (video), Brandon (photography)" },
+    { "label": "Guests", "value": "About 80 to 85 (final count in January)" },
+    { "label": "Delivery", "value": "Photos in 3 weeks, film in 6 weeks" }
+  ]
+}

@@ -1,0 +1,30 @@
+name = "filmsbyrandy-agreements"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+
+# Only these paths go to this Worker. The rest of filmsbyrandy.com is untouched.
+routes = [
+  { pattern = "filmsbyrandy.com/agreement/*", zone_name = "filmsbyrandy.com" },
+  { pattern = "filmsbyrandy.com/admin*", zone_name = "filmsbyrandy.com" },
+  { pattern = "filmsbyrandy.com/api/admin/*", zone_name = "filmsbyrandy.com" },
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "filmsbyrandy-agreements"
+database_id = "REPLACE_WITH_ID_FROM_wrangler_d1_create"
+
+[vars]
+PUBLIC_BASE_URL = "https://filmsbyrandy.com"
+OWNER_EMAIL = "filmsbyrandyy@gmail.com"
+FROM_EMAIL = "Films by Randy <agreements@filmsbyrandy.com>"
+# Payment details shown to clients. Fill these in before deploying.
+VENMO_HANDLE = "REPLACE_venmo_handle"
+APPLE_CASH_PHONE = "(555) 555-5555"
+ZELLE_ID = "REPLACE_zelle_email_or_phone"
+ZELLE_NAME = "Randy"
+
+# Secrets (set with `npx wrangler secret put NAME`, never committed):
+#   RESEND_API_KEY   Resend API key
+#   ADMIN_TOKEN      long random string for /admin and the new-client script
