@@ -33,7 +33,7 @@ npx wrangler d1 create filmsbyrandy-agreements   # paste database_id into wrangl
 npm run db:init                                  # creates tables (remote)
 ```
 
-Edit `[vars]` in `wrangler.toml`: `VENMO_HANDLE`, `APPLE_CASH_PHONE`, `ZELLE_ID`,
+Check `[vars]` in `wrangler.toml`: `VENMO_HANDLE`, `APPLE_CASH_PHONE`, `ZELLE_ID`,
 `ZELLE_NAME`, `FROM_EMAIL` (must be on your Resend-verified domain), and `OWNER_EMAIL`.
 
 ```bash
@@ -74,3 +74,5 @@ node test/e2e.mjs <id-from-above>             # browser smoke test (needs Playwr
 ```
 
 Without `RESEND_API_KEY`, emails are skipped and logged.
+
+The Zelle QR code shown on the page lives in `assets/zelle-qr.png`.

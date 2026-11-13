@@ -84,6 +84,7 @@ function paymentCard(env, a) {
     <button type="button" class="btn" data-copy="${esc(dep.apple.phone)}">Copy number</button></div></div>
   <div class="pay"><div class="pay-h"><h3>Zelle</h3><span class="handle">${esc(dep.zelle.id)}</span></div>
     <p>Send <b data-amount>${dep.amountLabel}</b> to ${esc(dep.zelle.name)} from your banking app with the memo <b data-note>${esc(dep.note)}</b>.</p>
+    <div class="qr"><img src="/agreement/assets/zelle-qr.png" width="132" height="130" alt="Zelle QR code for ${esc(dep.zelle.name)}"><span>On a computer? Scan this with your banking app to send with Zelle.</span></div>
     <div class="btn-row"><button type="button" class="btn" data-copy="${esc(dep.zelle.id)}">Copy Zelle ${dep.zelle.id.includes('@') ? 'email' : 'number'}</button></div></div>
   <label class="check"><input type="checkbox" id="payment_sent" name="payment_sent"><span>I have sent my payment</span></label>
   <label for="payment_method">How did you pay?</label>

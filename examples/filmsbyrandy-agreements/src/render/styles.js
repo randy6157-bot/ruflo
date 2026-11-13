@@ -73,6 +73,8 @@ textarea{min-height:96px;resize:vertical}
 .pay-h h3{font-size:15px}
 .pay p{margin:0 0 12px;color:var(--muted);font-size:14px}
 .pay ol{margin:0 0 12px;padding-left:20px;color:var(--muted);font-size:14px}
+.qr{display:flex;align-items:center;gap:14px;margin:0 0 12px;color:var(--muted);font-size:13px}
+.qr img{background:#fff;border-radius:10px;padding:6px;flex:none}
 .handle{font:600 15px Manrope;color:var(--text);word-break:break-all}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 18px;border-radius:999px;
   font:700 15px Manrope;text-decoration:none;cursor:pointer;border:1px solid var(--line);background:var(--card2);color:var(--text)}
@@ -100,8 +102,8 @@ textarea{min-height:96px;resize:vertical}
 .foot .sig{font:italic 600 30px/1 "Snell Roundhand","Segoe Script","Brush Script MT",cursive;margin-bottom:10px;
   background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--card2);border:1px solid var(--line);
-  padding:12px 18px;border-radius:999px;font-weight:600;font-size:14px;transition:transform .25s}
-.toast.show{transform:translateX(-50%) translateY(0)}
+  padding:12px 18px;border-radius:999px;font-weight:600;font-size:14px;transition:transform .25s,opacity .25s;opacity:0;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media (min-width:640px){
   .wrap{padding:40px 24px 80px}
   .card{padding:28px}

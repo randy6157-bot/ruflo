@@ -13,6 +13,8 @@ import { renderLocked, renderNotFound, renderOpen } from './render/page.js';
 import { renderAdmin } from './render/admin.js';
 import { PRIVATE_HEADERS, clean, htmlResponse, json, newNonce, safeEqual, sha256Hex } from './util.js';
 
+import zelleQr from '../assets/zelle-qr.png';
+
 const METHODS = ['venmo', 'apple_cash', 'zelle'];
 
 function baseUrl(env, req) {
@@ -133,6 +135,10 @@ export default {
 
     if (path.startsWith('/api/admin')) return handleAdmin(req, env, path);
     if (path === '/admin' && req.method === 'GET') return htmlResponse(renderAdmin(nonce), nonce);
+
+    if (path === '/agreement/assets/zelle-qr.png') {
+      return new Response(zelleQr, { headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=86400', 'X-Robots-Tag': 'noindex' } });
+    }
 
     const m = path.match(/^\/agreement\/([a-z0-9]+)(\/sign|\/pdf)?$/);
     if (m) {

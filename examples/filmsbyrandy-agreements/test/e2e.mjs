@@ -26,6 +26,7 @@ await page.locator('input[value=deposit]').check({ force: true });
 const venmo = await page.locator('#venmo-btn').getAttribute('href');
 assert(venmo.includes('amount=425') && venmo.includes('note=Deposit%2C%20Maria%20Vasquez%2C%20Mar%2020%202027'), 'venmo link has deposit + note');
 
+assert(await page.locator('.qr img').evaluate((i) => i.complete && i.naturalWidth > 0), 'Zelle QR image loads');
 // Validation: submitting without agreeing fails
 await page.fill('#client_email', 'maria@example.com');
 await page.locator('#submit').click();
@@ -71,8 +72,9 @@ assert((await fetch(`${base}/api/admin/agreements`)).status === 401, 'admin API 
 const admin = await browser.newPage({ viewport: { width: 420, height: 900 } });
 await admin.goto(`${base}/admin#${id}`);
 await admin.fill('#token', token); await admin.locator('#login-form button').click();
-await admin.getByText('Mark deposit received').click();
-await admin.getByText('Deposit received', { exact: true }).waitFor();
+const card = admin.locator(`[id="${id}"]`);
+await card.getByText('Mark deposit received').click();
+await card.getByText('Deposit received', { exact: true }).waitFor();
 assert(true, 'admin marked deposit received');
 await admin.screenshot({ path: `${shots}/4-admin.png`, fullPage: true });
 

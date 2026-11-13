@@ -10,6 +10,11 @@ routes = [
   { pattern = "filmsbyrandy.com/api/admin/*", zone_name = "filmsbyrandy.com" },
 ]
 
+# Bundle PNGs (the Zelle QR code) as binary modules.
+[[rules]]
+type = "Data"
+globs = ["**/*.png"]
+
 [[d1_databases]]
 binding = "DB"
 database_name = "filmsbyrandy-agreements"
@@ -19,11 +24,11 @@ database_id = "REPLACE_WITH_ID_FROM_wrangler_d1_create"
 PUBLIC_BASE_URL = "https://filmsbyrandy.com"
 OWNER_EMAIL = "filmsbyrandyy@gmail.com"
 FROM_EMAIL = "Films by Randy <agreements@filmsbyrandy.com>"
-# Payment details shown to clients. Fill these in before deploying.
-VENMO_HANDLE = "REPLACE_venmo_handle"
-APPLE_CASH_PHONE = "(555) 555-5555"
-ZELLE_ID = "REPLACE_zelle_email_or_phone"
-ZELLE_NAME = "Randy"
+# Payment details shown to clients.
+VENMO_HANDLE = "isthatrandyy"
+APPLE_CASH_PHONE = "(978) 828-4008"
+ZELLE_ID = "(978) 828-4008"
+ZELLE_NAME = "Randy Reyes-Vargas"
 
 # Secrets (set with `npx wrangler secret put NAME`, never committed):
 #   RESEND_API_KEY   Resend API key
